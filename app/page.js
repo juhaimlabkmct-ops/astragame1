@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { generateScenario } from '../lib/scenarioGenerator';
 import MessageDisplay from '../components/MessageDisplay';
@@ -15,13 +16,17 @@ export default function Home() {
     const [score, setScore] = useState(0);
     const [totalRounds, setTotalRounds] = useState(0);
     const [streak, setStreak] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
+
+    const MAX_ROUNDS = 15;
 
     const handleAnswer = (userThinkIsPhish) => {
         const correct = userThinkIsPhish === currentScenario.isPhish;
         setIsCorrect(correct);
         setShowFeedback(true);
-        setTotalRounds(prev => prev + 1);
-
+        // Don't increment totalRounds here, do it on "Next" or just use it for display
+        // Actually, we increment after feedback to move to next round
+        // Let's increment score immediately though
         if (correct) {
             setScore(prev => prev + 1);
             setStreak(prev => prev + 1);
@@ -31,54 +36,109 @@ export default function Home() {
     };
 
     const handleNext = () => {
-        setCurrentScenario(generateScenario());
-        setShowFeedback(false);
+        const nextRound = totalRounds + 1;
+        setTotalRounds(nextRound);
+
+        if (nextRound >= MAX_ROUNDS) {
+            setGameOver(true);
+            setShowFeedback(false);
+        } else {
+            setCurrentScenario(generateScenario());
+            setShowFeedback(false);
+        }
     };
 
     const handleReset = () => {
         setCurrentScenario(generateScenario());
         setShowFeedback(false);
+        setIsCorrect(false);
         setScore(0);
         setTotalRounds(0);
         setStreak(0);
+        setGameOver(false);
     };
+
+    const getGrade = () => {
+        const percentage = (score / MAX_ROUNDS) * 100;
+        if (percentage === 100) return { rank: 'S', title: 'Cyber Guardian 🛡️', color: '#ffd700' };
+        if (percentage >= 90) return { rank: 'A', title: 'Security Expert 👮‍♂️', color: '#00ff9d' };
+        if (percentage >= 80) return { rank: 'B', title: 'Vigilant User 👀', color: '#2d9cf5' };
+        if (percentage >= 60) return { rank: 'C', title: 'Risk Prone ⚠️', color: '#f59e0b' };
+        return { rank: 'D', title: 'Easy Target 🎯', color: '#ff3860' };
+    };
+
+    const grade = getGrade();
 
     return (
         <main className={styles.main}>
             <div className="container">
                 <header className={styles.header}>
+                    <div className={styles.logoContainer}>
+                        <Image
+                            src="/logo.png"
+                            alt="Association Logo"
+                            width={120}
+                            height={120}
+                            className={styles.logo}
+                            priority
+                        />
+                    </div>
                     <h1 className={styles.title}>
                         🎣 Phish-Me-Not
                     </h1>
                     <p className={styles.subtitle}>
-                        Can you spot the phish? Test your cybersecurity skills!
+                        {gameOver ? 'Mission Complete!' : 'Can you spot the phish? Test your cybersecurity skills!'}
                     </p>
                 </header>
 
-                <ScoreBoard
-                    score={score}
-                    totalRounds={totalRounds}
-                    streak={streak}
-                />
-
-                {!showFeedback ? (
+                {!gameOver ? (
                     <>
-                        <MessageDisplay scenario={currentScenario} />
-                        <GameControls onAnswer={handleAnswer} disabled={showFeedback} />
+                        <ScoreBoard
+                            score={score}
+                            totalRounds={totalRounds}
+                            streak={streak}
+                        />
+
+                        {!showFeedback ? (
+                            <>
+                                <div className={styles.roundIndicator}>Question {totalRounds + 1} of {MAX_ROUNDS}</div>
+                                <MessageDisplay scenario={currentScenario} />
+                                <GameControls onAnswer={handleAnswer} disabled={showFeedback} />
+                            </>
+                        ) : (
+                            <FeedbackPanel
+                                isCorrect={isCorrect}
+                                scenario={currentScenario}
+                                onNext={handleNext}
+                            />
+                        )}
+
+                        <div className={styles.resetSection}>
+                            <button className={styles.resetBtn} onClick={handleReset}>
+                                🔄 Start Over
+                            </button>
+                        </div>
                     </>
                 ) : (
-                    <FeedbackPanel
-                        isCorrect={isCorrect}
-                        scenario={currentScenario}
-                        onNext={handleNext}
-                    />
-                )}
+                    <div className={`${styles.results} glass fade-in`}>
+                        <h2>Training Complete</h2>
 
-                {totalRounds > 0 && (
-                    <div className={styles.resetSection}>
-                        <button className={styles.resetBtn} onClick={handleReset}>
-                            🔄 Reset Game
-                        </button>
+                        <div className={styles.finalScore}>
+                            <div className={styles.rankBadge} style={{ borderColor: grade.color }}>
+                                <span style={{ color: grade.color }}>{grade.rank}</span>
+                            </div>
+                            <div className={styles.scoreDetails}>
+                                <h3 style={{ color: grade.color }}>{grade.title}</h3>
+                                <p>You spotted <strong>{score}</strong> out of <strong>{MAX_ROUNDS}</strong> threats.</p>
+                                <p className={styles.accuracy}>Accuracy: {Math.round((score / MAX_ROUNDS) * 100)}%</p>
+                            </div>
+                        </div>
+
+                        <div className={styles.resultActions}>
+                            <button className={styles.restartBtn} onClick={handleReset}>
+                                🔄 Play Again
+                            </button>
+                        </div>
                     </div>
                 )}
 
