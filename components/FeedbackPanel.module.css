@@ -1,0 +1,141 @@
+.feedback {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    border: 2px solid;
+}
+
+.correct {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+.incorrect {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 30px rgba(255, 68, 102, 0.3);
+}
+
+.result {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.result h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.correct h2 {
+    color: var(--accent-green);
+}
+
+.incorrect h2 {
+    color: var(--accent-red);
+}
+
+.explanation {
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.rebuttal {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-green);
+    margin-bottom: var(--spacing-lg);
+    font-style: italic;
+}
+
+.details h3 {
+    color: var(--accent-blue);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem;
+}
+
+.details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.details li {
+    padding: var(--spacing-sm) 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.details li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-green);
+    font-weight: bold;
+}
+
+.verdict {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: rgba(0, 255, 136, 0.1);
+    border-left: 4px solid var(--accent-green);
+    border-radius: 4px;
+    font-size: 1.1rem;
+}
+
+.difficulty {
+    margin-top: var(--spacing-md);
+    text-align: center;
+}
+
+.difficultyBadge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--accent-blue);
+    color: var(--bg-primary);
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.nextBtn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00cc66 100%);
+    color: var(--bg-primary);
+    font-size: 1.3rem;
+    padding: 1rem 2rem;
+    font-weight: 700;
+}
+
+.nextBtn:hover {
+    background: linear-gradient(135deg, #11ff99 0%, #11dd77 100%);
+    box-shadow: 0 6px 25px rgba(0, 255, 136, 0.5);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .emoji {
+        font-size: 3rem;
+    }
+
+    .result h2 {
+        font-size: 1.5rem;
+    }
+
+    .rebuttal {
+        font-size: 1rem;
+    }
+
+    .nextBtn {
+        font-size: 1.1rem;
+    }
+}

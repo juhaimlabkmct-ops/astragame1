@@ -1,0 +1,63 @@
+.controls {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    margin: var(--spacing-lg) 0;
+}
+
+.btn {
+    flex: 1;
+    max-width: 300px;
+    padding: 1.25rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.phishBtn {
+    background: linear-gradient(135deg, #ff4466 0%, #cc0033 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 68, 102, 0.4);
+}
+
+.phishBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff5577 0%, #dd1144 100%);
+    box-shadow: 0 6px 25px rgba(255, 68, 102, 0.6);
+    transform: translateY(-2px);
+}
+
+.safeBtn {
+    background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+    color: #0a0e17;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+}
+
+.safeBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #11ff99 0%, #11dd77 100%);
+    box-shadow: 0 6px 25px rgba(0, 255, 136, 0.6);
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .btn {
+        max-width: 100%;
+        font-size: 1.1rem;
+        padding: 1rem 1.5rem;
+    }
+}

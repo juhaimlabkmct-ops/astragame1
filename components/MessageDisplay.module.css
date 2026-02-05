@@ -1,0 +1,101 @@
+.messageContainer {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    min-height: 300px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.typeLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent-green);
+}
+
+.dramaIndicator {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+.messageContent {
+    color: var(--text-primary);
+}
+
+.sender,
+.subject {
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+}
+
+.sender strong,
+.subject strong {
+    color: var(--accent-blue);
+    margin-right: 0.5rem;
+}
+
+.subject {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.body {
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--accent-green);
+}
+
+/* Different styles for message types */
+.email {
+    border-color: var(--accent-blue);
+}
+
+.sms {
+    border-color: var(--accent-green);
+}
+
+.whatsapp {
+    border-color: #25D366;
+}
+
+.email .typeLabel {
+    color: var(--accent-blue);
+}
+
+.sms .typeLabel {
+    color: var(--accent-green);
+}
+
+.whatsapp .typeLabel {
+    color: #25D366;
+}
+
+@media (max-width: 768px) {
+    .messageContainer {
+        padding: var(--spacing-md);
+        min-height: 250px;
+    }
+
+    .body {
+        font-size: 0.9rem;
+    }
+}
