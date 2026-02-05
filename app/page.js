@@ -7,6 +7,8 @@ import MessageDisplay from '../components/MessageDisplay';
 import GameControls from '../components/GameControls';
 import FeedbackPanel from '../components/FeedbackPanel';
 import ScoreBoard from '../components/ScoreBoard';
+import TiltCard from '../components/TiltCard';
+import CursorBlink from '../components/CursorBlink';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -24,9 +26,7 @@ export default function Home() {
         const correct = userThinkIsPhish === currentScenario.isPhish;
         setIsCorrect(correct);
         setShowFeedback(true);
-        // Don't increment totalRounds here, do it on "Next" or just use it for display
-        // Actually, we increment after feedback to move to next round
-        // Let's increment score immediately though
+
         if (correct) {
             setScore(prev => prev + 1);
             setStreak(prev => prev + 1);
@@ -71,6 +71,7 @@ export default function Home() {
 
     return (
         <main className={styles.main}>
+            <CursorBlink />
             <div className="container">
                 <header className={styles.header}>
                     <div className={styles.logoContainer}>
@@ -93,24 +94,30 @@ export default function Home() {
 
                 {!gameOver ? (
                     <>
-                        <ScoreBoard
-                            score={score}
-                            totalRounds={totalRounds}
-                            streak={streak}
-                        />
+                        <TiltCard>
+                            <ScoreBoard
+                                score={score}
+                                totalRounds={totalRounds}
+                                streak={streak}
+                            />
+                        </TiltCard>
 
                         {!showFeedback ? (
                             <>
                                 <div className={styles.roundIndicator}>Question {totalRounds + 1} of {MAX_ROUNDS}</div>
-                                <MessageDisplay scenario={currentScenario} />
+                                <TiltCard>
+                                    <MessageDisplay scenario={currentScenario} />
+                                </TiltCard>
                                 <GameControls onAnswer={handleAnswer} disabled={showFeedback} />
                             </>
                         ) : (
-                            <FeedbackPanel
-                                isCorrect={isCorrect}
-                                scenario={currentScenario}
-                                onNext={handleNext}
-                            />
+                            <TiltCard>
+                                <FeedbackPanel
+                                    isCorrect={isCorrect}
+                                    scenario={currentScenario}
+                                    onNext={handleNext}
+                                />
+                            </TiltCard>
                         )}
 
                         <div className={styles.resetSection}>
@@ -120,26 +127,38 @@ export default function Home() {
                         </div>
                     </>
                 ) : (
-                    <div className={`${styles.results} glass fade-in`}>
-                        <h2>Training Complete</h2>
+                    <TiltCard>
+                        <div className={`${styles.results} glass fade-in`}>
+                            <h2>Training Complete</h2>
 
-                        <div className={styles.finalScore}>
-                            <div className={styles.rankBadge} style={{ borderColor: grade.color }}>
-                                <span style={{ color: grade.color }}>{grade.rank}</span>
+                            <div className={styles.logoContainer}>
+                                <Image
+                                    src="/logo.png"
+                                    alt="Association Logo"
+                                    width={100}
+                                    height={100}
+                                    className={styles.logo}
+                                />
                             </div>
-                            <div className={styles.scoreDetails}>
-                                <h3 style={{ color: grade.color }}>{grade.title}</h3>
-                                <p>You spotted <strong>{score}</strong> out of <strong>{MAX_ROUNDS}</strong> threats.</p>
-                                <p className={styles.accuracy}>Accuracy: {Math.round((score / MAX_ROUNDS) * 100)}%</p>
+
+                            <div className={styles.finalScore}>
+                                <div className={styles.rankBadge} style={{ borderColor: grade.color }}>
+                                    <span style={{ color: grade.color }}>{grade.rank}</span>
+                                </div>
+                                <div className={styles.scoreDetails}>
+                                    <h3 style={{ color: grade.color }}>{grade.title}</h3>
+                                    <p>You spotted <strong>{score}</strong> out of <strong>{MAX_ROUNDS}</strong> threats.</p>
+                                    <p className={styles.accuracy}>Accuracy: {Math.round((score / MAX_ROUNDS) * 100)}%</p>
+                                </div>
+                            </div>
+
+                            <div className={styles.resultActions}>
+                                <button className={styles.restartBtn} onClick={handleReset}>
+                                    🔄 Play Again
+                                </button>
                             </div>
                         </div>
-
-                        <div className={styles.resultActions}>
-                            <button className={styles.restartBtn} onClick={handleReset}>
-                                🔄 Play Again
-                            </button>
-                        </div>
-                    </div>
+                    </TiltCard>
                 )}
 
                 <footer className={styles.footer}>

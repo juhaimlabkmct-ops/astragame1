@@ -171,3 +171,9 @@ h3 {
     /* Simpler bg for performance */
   }
 }
+/* Custom Cursor Styles */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background-color: var(--accent-green); border-radius: 50%; z-index: 9999; pointer-events: none; mix-blend-mode: exclusion; }
+  .cursor-outline { position: fixed; top: 0; left: 0; width: 32px; height: 32px; border: 1px solid var(--accent-green); border-radius: 50%; z-index: 9998; pointer-events: none; mix-blend-mode: exclusion; }
+}

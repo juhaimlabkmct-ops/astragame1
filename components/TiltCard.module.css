@@ -1,0 +1,13 @@
+.card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .card {
+        transform: none !important;
+        /* Disable tilt on mobile for performance/usability */
+        rotate: none !important;
+    }
+}
