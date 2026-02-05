@@ -1,20 +1,24 @@
 .feedback {
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius);
+    background: rgba(10, 15, 30, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     margin: var(--spacing-lg) 0;
-    border: 2px solid;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
 }
 
 .correct {
     border-color: var(--accent-green);
-    box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+    background: radial-gradient(circle at top left, var(--accent-green-dim), transparent 70%);
 }
 
 .incorrect {
     border-color: var(--accent-red);
-    box-shadow: 0 0 30px rgba(255, 68, 102, 0.3);
+    background: radial-gradient(circle at top left, var(--accent-red-dim), transparent 70%);
 }
 
 .result {
@@ -23,43 +27,55 @@
 }
 
 .emoji {
-    font-size: 4rem;
-    display: block;
-    margin-bottom: var(--spacing-md);
+    font-size: 5rem;
+    display: inline-block;
+    margin-bottom: var(--spacing-sm);
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.3));
 }
 
 .result h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    font-weight: 900;
     margin: 0;
+    background: linear-gradient(135deg, #fff, #bbb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .correct h2 {
-    color: var(--accent-green);
+    background: linear-gradient(135deg, #fff, var(--accent-green));
 }
 
 .incorrect h2 {
-    color: var(--accent-red);
+    background: linear-gradient(135deg, #fff, var(--accent-red));
 }
 
 .explanation {
     background: rgba(0, 0, 0, 0.3);
     padding: var(--spacing-lg);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     margin-bottom: var(--spacing-lg);
 }
 
 .rebuttal {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--accent-green);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
     margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     font-style: italic;
+    line-height: 1.5;
 }
 
 .details h3 {
-    color: var(--accent-blue);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-bottom: var(--spacing-md);
-    font-size: 1.1rem;
 }
 
 .details ul {
@@ -69,73 +85,102 @@
 
 .details li {
     padding: var(--spacing-sm) 0;
-    padding-left: 1.5rem;
+    padding-left: 1.75rem;
     position: relative;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     line-height: 1.6;
+    font-size: 1.05rem;
 }
 
 .details li::before {
-    content: '→';
+    content: '🔍';
     position: absolute;
     left: 0;
-    color: var(--accent-green);
-    font-weight: bold;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 .verdict {
     margin-top: var(--spacing-lg);
     padding: var(--spacing-md);
-    background: rgba(0, 255, 136, 0.1);
-    border-left: 4px solid var(--accent-green);
-    border-radius: 4px;
-    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .difficulty {
     margin-top: var(--spacing-md);
     text-align: center;
+    opacity: 0.7;
+    font-size: 0.85rem;
 }
 
 .difficultyBadge {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: var(--accent-blue);
-    color: var(--bg-primary);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
     border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.9rem;
 }
 
 .nextBtn {
     width: 100%;
-    background: linear-gradient(135deg, var(--accent-green) 0%, #00cc66 100%);
+    background: var(--text-primary);
     color: var(--bg-primary);
-    font-size: 1.3rem;
-    padding: 1rem 2rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 1.25rem;
+    font-weight: 800;
+    border-radius: var(--radius-md);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    transition: all 0.2s;
 }
 
 .nextBtn:hover {
-    background: linear-gradient(135deg, #11ff99 0%, #11dd77 100%);
-    box-shadow: 0 6px 25px rgba(0, 255, 136, 0.5);
     transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+    background: #fff;
+}
+
+.nextBtn:active {
+    transform: translateY(1px);
 }
 
 @media (max-width: 768px) {
+    .feedback {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+    }
+
     .emoji {
-        font-size: 3rem;
+        font-size: 4rem;
     }
 
     .result h2 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     .rebuttal {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .nextBtn {
-        font-size: 1.1rem;
+        padding: 1rem;
+        font-size: 1rem;
+        position: fixed;
+        bottom: var(--spacing-md);
+        left: var(--spacing-md);
+        right: var(--spacing-md);
+        width: auto;
+        z-index: 100;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Ensure content isn't hidden by fixed button */
+    .feedback {
+        padding-bottom: 80px;
     }
 }

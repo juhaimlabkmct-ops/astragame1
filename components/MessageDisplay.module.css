@@ -1,12 +1,40 @@
+.wrapper {
+    perspective: 1000px;
+}
+
 .messageContainer {
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius);
     padding: var(--spacing-lg);
     margin: var(--spacing-lg) 0;
-    border: 2px solid var(--border-color);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    min-height: 300px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    /* Glass effect handles background/border */
+}
+
+/* Top bar indicator */
+.messageContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    opacity: 0.7;
+}
+
+.email.messageContainer::before {
+    background: var(--accent-blue);
+}
+
+.sms.messageContainer::before {
+    background: var(--accent-green);
+}
+
+.whatsapp.messageContainer::before {
+    background: #25D366;
 }
 
 .header {
@@ -14,88 +42,114 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .typeLabel {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--accent-green);
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
 }
 
 .dramaIndicator {
     font-size: 1.5rem;
     animation: pulse 2s infinite;
+    cursor: help;
 }
 
 .messageContent {
-    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .sender,
 .subject {
-    margin-bottom: var(--spacing-md);
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
 }
 
-.sender strong,
-.subject strong {
-    color: var(--accent-blue);
-    margin-right: 0.5rem;
+.label {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 70px;
+    flex-shrink: 0;
 }
 
-.subject {
-    font-size: 1.1rem;
+.value {
     color: var(--text-primary);
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin-bottom: var(--spacing-lg);
 }
 
 .body {
-    background: rgba(0, 0, 0, 0.3);
-    padding: var(--spacing-md);
-    border-radius: 8px;
+    background: transparent;
+    padding: var(--spacing-sm);
+    line-height: 1.8;
+    color: var(--text-primary);
+    font-size: 1.1rem;
     white-space: pre-wrap;
-    line-height: 1.6;
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    border-left: 3px solid var(--accent-green);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    /* Cleaner reading font */
 }
 
-/* Different styles for message types */
-.email {
-    border-color: var(--accent-blue);
-}
-
-.sms {
-    border-color: var(--accent-green);
-}
-
-.whatsapp {
-    border-color: #25D366;
-}
-
-.email .typeLabel {
+/* Type specific overrides */
+.email .value {
     color: var(--accent-blue);
 }
 
-.sms .typeLabel {
+.sms .value {
     color: var(--accent-green);
 }
 
-.whatsapp .typeLabel {
+.whatsapp .value {
     color: #25D366;
 }
 
 @media (max-width: 768px) {
     .messageContainer {
         padding: var(--spacing-md);
-        min-height: 250px;
+        min-height: auto;
+        margin: var(--spacing-md) 0;
+    }
+
+    .label {
+        width: 60px;
+        font-size: 0.75rem;
+    }
+
+    .metadata {
+        padding: var(--spacing-sm);
     }
 
     .body {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 }

@@ -6,6 +6,14 @@ export const metadata = {
     keywords: ['cybersecurity', 'phishing', 'security training', 'game', 'education'],
 };
 
+export const viewport = {
+    themeColor: '#050511',
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+};
+
 export default function RootLayout({ children }) {
     return (
         <html lang="en">

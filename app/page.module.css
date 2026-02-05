@@ -1,79 +1,88 @@
 .main {
     min-height: 100vh;
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-lg) var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .header {
     text-align: center;
     margin-bottom: var(--spacing-lg);
-    padding: var(--spacing-lg);
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius);
-    border: 2px solid var(--border-color);
-    box-shadow: var(--shadow-glow);
-    animation: glow 3s infinite;
+    width: 100%;
+    max-width: 600px;
 }
 
 .title {
     font-size: 3.5rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-blue) 100%);
+    font-weight: 900;
+    letter-spacing: -2px;
+    background: linear-gradient(to right, var(--accent-green), var(--accent-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: var(--spacing-md);
-    text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+    margin-bottom: var(--spacing-sm);
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3));
+    animation: float 6s ease-in-out infinite;
 }
 
 .subtitle {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
-    margin: 0;
+    line-height: 1.5;
 }
 
 .resetSection {
     text-align: center;
     margin: var(--spacing-lg) 0;
+    width: 100%;
 }
 
 .resetBtn {
-    background: rgba(0, 204, 255, 0.2);
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
 }
 
 .resetBtn:hover {
-    background: rgba(0, 204, 255, 0.3);
-    border-color: var(--accent-blue);
-    box-shadow: 0 4px 20px rgba(0, 204, 255, 0.3);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .footer {
     text-align: center;
-    margin-top: var(--spacing-lg);
-    padding: var(--spacing-lg);
+    margin-top: auto;
+    padding: var(--spacing-lg) 0;
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.footer p {
-    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
+    .main {
+        padding-bottom: 120px;
+        /* Space for the sticky controls */
+    }
+
     .title {
         font-size: 2.5rem;
     }
 
     .subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .header {
-        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .footer {
+        padding-bottom: var(--spacing-sm);
     }
 }
